@@ -1,9 +1,16 @@
 const CACHE_NAME = "morse-cache-v1";
 const urlsToCache = [
   "/",
-  "/index.html",
-  "/styles.css",
-  "/script.js",
+  "/about.css",
+  "/about.html",
+  "/main.html",
+  "/main.css",
+  "/morsetotext.js",
+  "/morsetotext.html",
+  "/morsetotext.css",
+  "/texttomorse.js",
+  "/texttomorse.html",
+  "/texttomorse.css",
   "/manifest.json",
   "/icons/icon-192.png",
   "/icons/icon-512.png"
