@@ -1,19 +1,13 @@
 const CACHE_NAME = "morse-cache-v1";
 const urlsToCache = [
   "/",
-  "/about.css",
-  "/about.html",
-  "/main.html",
-  "/main.css",
-  "/morsetotext.js",
-  "/morsetotext.html",
-  "/morsetotext.css",
-  "/texttomorse.js",
-  "/texttomorse.html",
-  "/texttomorse.css",
+  "/index.html",
+  "/index.css",
+  "/script.js",
   "/manifest.json",
   "/icons/icon-192.png",
-  "/icons/icon-512.png"
+  "/icons/icon-512.png",
+  "/morse.png"
 ];
 
 self.addEventListener("install", event => {
