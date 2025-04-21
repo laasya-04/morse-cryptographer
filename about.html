@@ -29,7 +29,7 @@
             height: auto;
             border: none;
           }
-         h2 {
+         h2, h3 {
             font-size: 50px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 600;
@@ -89,6 +89,8 @@
     .table-container {
       display: flex;
       gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     table {
@@ -146,7 +148,7 @@
     <p>Morse code isn’t just limited to sound. It can be sent using light (like flashing), vibrations, or any other method that can distinguish short and long signals. That’s why it's still used today in some emergency signaling scenarios.</p>
     <p><b>» Want to learn a fun fact?</b><br>Morse code was cleverly designed so that more frequent letters in the English language have shorter codes — making communication faster and more efficient. For example, the letter "E" is just a single dot!</p>
     <p>Can you imagine memorizing all those patterns? It might sound tricky at first, but many people actually enjoy learning Morse code as a hobby or for emergency preparedness. With practice, it becomes second nature!</p>
-    <img src="morse.png"><div class="table-container">
+    <h3>Alphabets and Numbers in Morse</h3><div class="table-container">
     <!-- Left Table -->
     <table>
       <tr><th>Alphabet</th><th>Morse</th></tr>
@@ -182,6 +184,19 @@
       <tr><td>Y</td><td>-.--</td></tr>
       <tr><td>Z</td><td>--..</td></tr>
     </table>
+        <table>
+    <tr><th>Number</th><th>Morse</th></tr>
+    <tr><td>0</td><td>-----</td></tr>
+    <tr><td>1</td><td>.----</td></tr>
+    <tr><td>2</td><td>..---</td></tr>
+    <tr><td>3</td><td>...--</td></tr>
+    <tr><td>4</td><td>....-</td></tr>
+    <tr><td>5</td><td>.....</td></tr>
+    <tr><td>6</td><td>-....</td></tr>
+    <tr><td>7</td><td>--...</td></tr>
+    <tr><td>8</td><td>---..</td></tr>
+    <tr><td>9</td><td>----.</td></tr>
+  </table>
   </div>
 </div>
     <footer>Made with 💙 for Morse code enthusiasts</footer>
