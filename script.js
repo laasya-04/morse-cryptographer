@@ -15,7 +15,7 @@ let pressStartTime=0;
 let isSpaceHeld=false;
 
 document.addEventListener('keydown',(e) => {
-  if(e.code === 'Space' && !isSpaceHeld) {
+  if(e.code === 'ArrowUp' && !isSpaceHeld) {
     pressStartTime = Date.now();
     isSpaceHeld=true;
     e.preventDefault();
@@ -23,7 +23,7 @@ document.addEventListener('keydown',(e) => {
 });
 
 document.addEventListener('keyup', (e) => {
-  if (e.code === 'Space'&& isSpaceHeld) {
+  if (e.code === 'ArrowUp'&& isSpaceHeld) {
     const duration = Date.now() - pressStartTime;
     isSpaceHeld=false;
     const threshold = 250; 
