@@ -4,41 +4,65 @@
   <meta charset="UTF-8" />
   <title>How to Use - Morse Code Cryptographer</title>
   <style>
-    body {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
       background: black;
       color: turquoise;
-      padding: 40px;
+      font-family: Arial, sans-serif;
     }
-    p{
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .content {
+      width: 100%;
+      height: 100%;
+      padding: 40px;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+    h1 {
+      font-size: 60px;
+      margin-bottom: 20px;
+    }
+    p {
       margin-bottom: 25px;
-      font-family: Arial,sans-serif;
       font-size: 50px;
+      line-height: 1.4;
     }
   </style>
 </head>
 <body>
-  <h1>How to Use</h1>
-  <p>1. Type your message in the input box.<br>
-     2. Click "To Morse" to convert text to Morse code.<br>
-     3. Click "To Text" to decode Morse code back to text.<br>
-     4. The converted message will appear in their respective output box.<br>
-     5. You can copy the output from the output box.<br>
-     6. Enjoy using the Morse Code Cryptographer!<br>
-  </p>
-  <p>
-    You can utilize the buttons such as play,pause, and stop to control the audio playback of the Morse code.<br>
-    1. The "Play" button will give the audio of the ouput message.<br>
-    2. The "Pause" button will pause the audio.<br>
-    3. The "Stop" button will stop the playback.<br>
-  </p>
-  <p>
-    An Ancient way to practice Morse Code is by tapping where we use only one button to send the dots and dashes.<br>
-    We can use space bar to transmit dots and dashes.<br>
-  </p>
-  <p>
-    Want to learn Morse Code anywhere and everywhere ?<br>
-    Here we are, providing this website an offline facility. Learn it wherever you are.<br>
-    </r>
-  </p>
+  <div class="content">
+    <h1>How to Use</h1>
+    <p>1. Type your message in the input box.<br>
+       2. Click "To Morse" to convert text to Morse code.<br>
+       3. Click "To Text" to decode Morse code back to text.<br>
+       4. The converted message will appear in their respective output box.<br>
+       5. You can copy the output from the output box.<br>
+       6. Enjoy using the Morse Code Cryptographer!<br>
+    </p>
+    <p>
+      You can utilize the buttons such as play, pause, and stop to control the audio playback of the Morse code.<br>
+      1. The "Play" button will give the audio of the output message.<br>
+      2. The "Pause" button will pause the audio.<br>
+      3. The "Stop" button will stop the playback.<br>
+    </p>
+    <p>
+      An ancient way to practice Morse Code is by tapping where we use only one button to send the dots and dashes.<br>
+      We can use the spacebar to transmit dots and dashes.<br>
+    </p>
+    <p>
+      Want to learn Morse Code anywhere and everywhere?<br>
+      Here we are, providing this website with an offline facility. Learn it wherever you are.<br>
+    </p>
+  </div>
 </body>
 </html>
