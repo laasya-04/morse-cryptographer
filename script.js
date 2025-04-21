@@ -12,31 +12,24 @@ const morseCodeMap = {
 };
 
 let pressStartTime=0;
-let morseInput='';
-let morseTimeout;
+let isSpaceHeld=false;
 
 document.addEventListener('keydown',(e) => {
-  if(e.code === 'Space' && pressStartTime === 0) {
+  if(e.code === 'Space' && !isSpaceHeld) {
     pressStartTime = Date.now();
-    clearTimeout(morseTimeout);
+    isSpaceHeld=true;
     e.preventDefault();
   }
 });
 
 document.addEventListener('keyup', (e) => {
-  if (e.code === 'Space') {
+  if (e.code === 'Space'&& isSpaceHeld) {
     const duration = Date.now() - pressStartTime;
-    pressStartTime = 0;
+    isSpaceHeld=true;
     const threshold = 250; 
-    morseInput += duration < threshold ? '.' : '-';
-    document.getElementById('textInput').value = morseInput;
-    document.getElementById('resultOutput').value = morseInput;
-    morseTimeout = setTimeout(() => {
-      const translated = morseInput.trim().split(' ').map(code => reverseMorseCodeMap[code] || '').join('');
-      document.getElementById('resultOutput').value = translated;
-      morseInput = ''; 
-      document.getElementById('textInput').value = ''; 
-    }, 1500);
+    const symbol = duration < threshold?'.':'-';
+    const input=document.getElementById('textInput');
+    input.value += symbol;
   }
 });
 
