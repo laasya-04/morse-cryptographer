@@ -29,7 +29,7 @@
             height: auto;
             border: none;
           }
-         h1 {
+         h2 {
             font-size: 50px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 600;
@@ -37,18 +37,74 @@
             text-align: center;
             margin-bottom: 2rem;
             }
+        .top-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 40px 10px;
+            position: relative;
+            z-index: 1;
+        }
+        .top-bar h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #0ff;
+            text-shadow: 0 0 10px #0ff;
+        }
+        .top-links {
+            position: absolute;
+            right: 40px;
+            top: 20px;
+        }
+        .top-links button {
+            margin-left: 10px;
+            padding: 6px 14px;
+            font-weight: bold;
+            border: none;
+            background-color: #0ff;
+            color: black;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px 10px 0 0;
+            background-color: #0ff;
+            color: black;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        footer {
+            text-align: center;
+            color: #0ff;
+            margin-top: 30px;
+            padding: 10px;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+}
     </style>
 </head>
-<body>
-    <h1>About Morse Code</h1>
-    <strong><p>Morse code is a telecommunications method that encodes text characters as standardized sequences of two different signal durations, called dots and dashes — or dits and dahs.</p>
-    <p>Ever wondered why it's called Morse code?<br>It's named after Samuel Morse, one of the early inventors of the electrical telegraph system. Morse code became a standard for communication long before mobile phones and the internet.</p>
+<body>  
+  <div class="top-bar">
+    <h1>Morse Code Cryptographer</h1>
+    <div class="top-links">
+      <button onclick="window.location.href='about.html'">About</button>
+      <button onclick="window.location.href='howtouse.html'">How to Use</button>
+    </div>
+  </div>
+    <h2>About Morse Code</h2>
+    <p>Morse code is a telecommunications method that encodes text characters as standardized sequences of two different signal durations, called dots and dashes — or <b>dits and dahs</b>.</p>
+    <p><b>Ever wondered why it's called Morse code?</b><br>It's named after <b>Samuel Morse</b>, one of the early inventors of the electrical telegraph system. Morse code became a standard for communication long before mobile phones and the internet.</p>
     <p>The international version of Morse code includes the 26 basic Latin letters (A to Z) and Arabic numerals (0 to 9). Interestingly, there is no distinction between upper and lower case letters in Morse code.</p>
-    <p>So how does it work?<br>Each Morse code symbol is formed by a specific combination of dits (short signals) and dahs (long signals). The timing between these signals is essential — for example, a dah is three times as long as a dit.</p>
-    <p>What about spaces?<br>Great question! Each dit or dah is followed by a short pause (equal to the length of a dit). Letters are separated by a pause equal to three dits, and words are separated by a space equal to seven dits. Timing really matters!</p>
+    <p><b>So how does it work?</b><br>Each Morse code symbol is formed by a specific combination of dits (short signals) and dahs (long signals). The timing between these signals is essential — for example, a dah is three times as long as a dit.</p>
+    <p><b>What about spaces?</b><br>Great question! Each dit or dah is followed by a short pause (equal to the length of a dit). Letters are separated by a pause equal to three dits, and words are separated by a space equal to seven dits. Timing really matters!</p>
     <p>Morse code isn’t just limited to sound. It can be sent using light (like flashing), vibrations, or any other method that can distinguish short and long signals. That’s why it's still used today in some emergency signaling scenarios.</p>
-    <p>Want to learn a fun fact?<br>Morse code was cleverly designed so that more frequent letters in the English language have shorter codes — making communication faster and more efficient. For example, the letter "E" is just a single dot!</p>
-    <p>Can you imagine memorizing all those patterns? It might sound tricky at first, but many people actually enjoy learning Morse code as a hobby or for emergency preparedness. With practice, it becomes second nature!</p></strong>
+    <p><b>Want to learn a fun fact?</b><br>Morse code was cleverly designed so that more frequent letters in the English language have shorter codes — making communication faster and more efficient. For example, the letter "E" is just a single dot!</p>
+    <p>Can you imagine memorizing all those patterns? It might sound tricky at first, but many people actually enjoy learning Morse code as a hobby or for emergency preparedness. With practice, it becomes second nature!</p>
     <img src="morse.png">
+    <footer>Made with 💙 for Morse code enthusiasts</footer>
 </body>
 </html>
