@@ -24,7 +24,46 @@
           font-size: 2.5rem;
           text-align: center;
           margin-bottom: 2rem;
-          }
+          }        
+      .top-bar {
+            text-align:center;
+            width:100%;
+            padding: 20px 0px 10px;
+            position: relative;
+            z-index: 1;
+        }
+        .top-bar h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #0ff;
+            text-shadow: 0 0 10px #0ff;
+            margin:0;
+        }
+        .top-links {
+            position: absolute; 
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .top-links button {
+            padding: 6px 14px;
+            font-weight: bold;
+            border: none;
+            background-color: #0ff;
+            color: black;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px 10px 0 0;
+            background-color: #0ff;
+            color: black;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }  
     mark{
       font-weight:bolder;
       background-color: #008b8b; 
@@ -52,6 +91,13 @@
   </style>
 </head>
 <body>
+  <div class="top-bar">
+    <h1>Morse Code Cryptographer</h1>
+    <div class="top-links">
+      <button onclick="window.location.href='about.html'">About</button>
+      <button onclick="window.location.href='howtouse.html'">How to Use</button>
+    </div>
+  </div>
   <div class="content">
     <h1 align="center">How to Use</h1>
     <p>1. Type your message in the input box.<br>
