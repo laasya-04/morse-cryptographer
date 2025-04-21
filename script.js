@@ -26,7 +26,7 @@ document.addEventListener('keyup', (e) => {
   if (e.code === 'ArrowUp'&& isSpaceHeld) {
     const duration = Date.now() - pressStartTime;
     isSpaceHeld=false;
-    const threshold = 250; 
+    const threshold = 500; 
     const symbol = duration < threshold?'.':'-';
     const input = document.getElementById('textInput');
     input.value += symbol; 
