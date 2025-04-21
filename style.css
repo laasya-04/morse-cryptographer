@@ -33,7 +33,7 @@ body {
   z-index: 1;
 }
 .top-bar h1 {
-  padding: 50px;
+  padding: 45px;
   font-size: 2.5rem;
   font-weight: bold;
   color: #0ff;
@@ -48,7 +48,8 @@ body {
 
 .top-links button {
   margin-left: 10px;
-  padding: 25px 14px;
+  margin-top:20px;
+  padding: 16px 14px;
   font-weight: bold;
   border: none;
   background-color: #0ff;
