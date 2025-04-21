@@ -101,8 +101,8 @@ for (let i = 0; i < 200; i++) {
 function animateParticles() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   particles.forEach(p => {
-    ctx.fillStyle = 'rgba(0, 255, 255, ${p.opacity})';
-    ctx.font = '${p.size}px Courier New';
+    ctx.fillStyle = `rgba(0, 255, 255, ${p.opacity})`;
+    ctx.font = `${p.size}px Courier New`;
     ctx.fillText(p.symbol, p.x, p.y);
     p.y += p.speed;
     if (p.y > canvas.height) {
