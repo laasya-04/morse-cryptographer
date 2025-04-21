@@ -45,7 +45,8 @@ function convertToMorse() {
 
 function convertToText() {
   const morse = document.getElementById('textInput').value.trim();
-  const text = morse.split(' ').map(code => reverseMorseCodeMap[code] || '').join('');
+  const words = morse.split('   ');
+  const text = words.map(word => word.split(' ').map(code => reverseMorseCodeMap[code] || '').join(' ')).join(' ');
   document.getElementById('resultOutput').value = text;
 }
 
