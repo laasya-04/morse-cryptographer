@@ -28,8 +28,9 @@ document.addEventListener('keyup', (e) => {
     isSpaceHeld=true;
     const threshold = 250; 
     const symbol = duration < threshold?'.':'-';
-    const input=document.getElementById('textInput');
+    const input;
     input.value += symbol;
+    document.getElementById('textInput') = input;
   }
 });
 
