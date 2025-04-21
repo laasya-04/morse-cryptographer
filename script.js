@@ -11,6 +11,35 @@ const morseCodeMap = {
   '8': '---..', '9': '----.', ' ': '/'
 };
 
+let pressStartTime=0;
+let morseInput='';
+let morseTimeout;
+
+document.addEventListener('keydown',(e) => {
+  if(e.code === 'Space' && pressStartTime === 0) {
+    pressStartTime = Date.now();
+    clearTimeout(morseTimeout);
+    e.preventDefault();
+  }
+});
+
+document.addEventListener('keyup', (e) => {
+  if (e.code === 'Space') {
+    const duration = Date.now() - pressStartTime;
+    pressStartTime = 0;
+    const threshold = 250; 
+    morseInput += duration < threshold ? '.' : '-';
+    document.getElementById('textInput').value = morseInput;
+    document.getElementById('resultOutput').value = morseInput;
+    morseTimeout = setTimeout(() => {
+      const translated = morseInput.trim().split(' ').map(code => reverseMorseCodeMap[code] || '').join('');
+      document.getElementById('resultOutput').value = translated;
+      morseInput = ''; 
+      document.getElementById('textInput').value = ''; 
+    }, 1500);
+  }
+});
+
 const reverseMorseCodeMap = Object.fromEntries(
   Object.entries(morseCodeMap).map(([k, v]) => [v, k])
 );
