@@ -1,14 +1,14 @@
 const CACHE_NAME = "morse-cache-v1";
 const urlsToCache = [
-  "/",
-  "/about.html",
-  "/howtouse.html",
-  "/index.html",
-  "/manifest.json",
-  "/script.js",
-  "/style.css",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png"
+  "/morse-cryptographer/", // Updated for root directory context
+  "/morse-cryptographer/about.html",
+  "/morse-cryptographer/index.html",
+  "/morse-cryptographer/style.css",
+  "/morse-cryptographer/script.js",
+  "/morse-cryptographer/howtouse.html",
+  "/morse-cryptographer/manifest.json",
+  "/morse-cryptographer/icons/icon-192.png", // Corrected path
+  "/morse-cryptographer/icons/icon-512.png"  // Corrected path
 ];
 
 self.addEventListener("install", event => {
