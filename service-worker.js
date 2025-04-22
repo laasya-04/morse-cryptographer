@@ -2,11 +2,11 @@ const CACHE_NAME = "morse-cache-v1";
 const urlsToCache = [
   "/",
   "/about.html",
-  "/index.html",
-  "/style.css",
-  "/script.js",
   "/howtouse.html",
+  "/index.html",
   "/manifest.json",
+  "/script.js",
+  "/style.css",
   "/icons/icon-192.png",
   "/icons/icon-512.png"
 ];
