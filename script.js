@@ -1,27 +1,14 @@
-const morseCodeMap = {
-  'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..',
-  'E': '.', 'F': '..-.', 'G': '--.', 'H': '....',
-  'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
-  'M': '--', 'N': '-.', 'O': '---', 'P': '.--.',
-  'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-',
-  'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
-  'Y': '-.--', 'Z': '--..',
-  '0': '-----', '1': '.----', '2': '..---', '3': '...--',
-  '4': '....-', '5': '.....', '6': '-....', '7': '--...',
-  '8': '---..', '9': '----.', ' ': '/'
-};
-
-    if ('serviceWorker' in navigator){
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js')
-        .then(registration => {
-          console.log('Service worker registered', registration);
-        })
-        .catch(error => {
-          console.error('Service worker registration failed', error);
-        });
-      });
-    }
+if ('serviceWorker' in navigator){
+   window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js')
+      .then(registration => {
+        console.log('Service worker registered', registration);
+      })
+      .catch(error => {
+        console.error('Service worker registration failed', error);
+     });
+   });
+}
 
 let pressStartTime=0;
 let isSpaceHeld=false;
@@ -45,6 +32,18 @@ document.addEventListener('keyup', (e) => {
   }
 });
 
+const morseCodeMap = {
+  'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..',
+  'E': '.', 'F': '..-.', 'G': '--.', 'H': '....',
+  'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
+  'M': '--', 'N': '-.', 'O': '---', 'P': '.--.',
+  'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-',
+  'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+  'Y': '-.--', 'Z': '--..',
+  '0': '-----', '1': '.----', '2': '..---', '3': '...--',
+  '4': '....-', '5': '.....', '6': '-....', '7': '--...',
+  '8': '---..', '9': '----.', ' ': '/'
+};
 const reverseMorseCodeMap = Object.fromEntries(
   Object.entries(morseCodeMap).map(([k, v]) => [v, k])
 );
