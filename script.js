@@ -12,10 +12,8 @@ if ('serviceWorker' in navigator){
 
 function toggleButtons() {
   const mode = document.querySelector('input[name="mode"]:checked').value;
-
   const toMorseBtn = document.getElementById('toMorseBtn');
   const toTextBtn = document.getElementById('toTextBtn');
-
   if (mode === 'textToMorse') {
     toMorseBtn.disabled = false;
     toTextBtn.disabled = true;
@@ -24,8 +22,15 @@ function toggleButtons() {
     toTextBtn.disabled = false;
   }
 }
+function setupRadioButtons() {
+  const radios = document.querySelectorAll('input[name="mode"]');
+  radios.forEach(radio => {
+    radio.addEventListener('change', toggleButtons);
+  });
+}
 window.onload = () => {
   toggleButtons();
+  setupRadioButtons();
 };
 
 
