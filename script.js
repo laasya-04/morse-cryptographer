@@ -11,26 +11,30 @@ if ('serviceWorker' in navigator){
 }
 
 function toggleButtons() {
-  const mode = document.querySelector('input[name="mode"]:checked').value;
+  const mode = document.getElementById('modeSelect').value;
   const toMorseBtn = document.getElementById('toMorseBtn');
   const toTextBtn = document.getElementById('toTextBtn');
+
   if (mode === 'textToMorse') {
     toMorseBtn.disabled = false;
+    toMorseBtn.style.backgroundColor = '';
+    toMorseBtn.style.cursor = 'pointer';
+
     toTextBtn.disabled = true;
+    toTextBtn.style.backgroundColor = 'lightgreen';
+    toTextBtn.style.cursor = 'default';
   } else {
-    toMorseBtn.disabled = true;
     toTextBtn.disabled = false;
+    toTextBtn.style.backgroundColor = '';
+    toTextBtn.style.cursor = 'pointer';
+
+    toMorseBtn.disabled = true;
+    toMorseBtn.style.backgroundColor = 'lightgreen';
+    toMorseBtn.style.cursor = 'default';
   }
-}
-function setupRadioButtons() {
-  const radios = document.querySelectorAll('input[name="mode"]');
-  radios.forEach(radio => {
-    radio.addEventListener('change', toggleButtons);
-  });
 }
 window.onload = () => {
   toggleButtons();
-  setupRadioButtons();
 };
 
 
