@@ -12,10 +12,20 @@ if ('serviceWorker' in navigator){
 
 function toggleButtons() {
   const mode = document.querySelector('input[name="mode"]:checked').value;
-  document.getElementById('toMorseBtn').disabled = (mode === 'morseToText');
-  document.getElementById('toTextBtn').disabled = (mode === 'textToMorse');
+
+  const toMorseBtn = document.getElementById('toMorseBtn');
+  const toTextBtn = document.getElementById('toTextBtn');
+
+  if (mode === 'textToMorse') {
+    toMorseBtn.disabled = false;
+    toTextBtn.disabled = true;
+  } else {
+    toMorseBtn.disabled = true;
+    toTextBtn.disabled = false;
+  }
 }
-window.onload = toggleButtons;
+window.addEventListener('DOMContentLoaded', toggleButtons);
+
 
 let pressStartTime=0;
 let isSpaceHeld=false;
