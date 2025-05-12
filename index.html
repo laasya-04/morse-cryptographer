@@ -16,13 +16,22 @@
       <button onclick="window.location.href='about.html'">About</button>
       <button onclick="window.location.href='howtouse.html'">How to Use</button>
     </div>
-  </div>
-
+  </div>  
   <div class="container">
+    <! this is added one>
+    <div>
+      <label>
+        <input type="radio" name="mode" value="textToMorse" checked onchange="toggleButtons()"> Text to Morse
+      </label>
+      <label>
+        <input type="radio" name="mode" value="morseToText" onchange="toggleButtons()"> Morse to Text
+      </label>
+    </div>
+    <! till here>
     <textarea id="textInput" placeholder="Enter text or Morse code..."></textarea>
     <br/>
-    <button onclick="convertToMorse()">To Morse</button>
-    <button onclick="convertToText()">To Text</button>
+    <button id="toMorseBtn" onclick="convertToMorse()">To Morse</button>
+    <button id="toTextBtn" onclick="convertToText()">To Text</button>
     <br/>
     <textarea id="resultOutput" placeholder="Result will appear here..."></textarea>
     <br/>
