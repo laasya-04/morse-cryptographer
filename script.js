@@ -16,23 +16,20 @@ function toggleButtons() {
   const toTextBtn = document.getElementById('toTextBtn');
 
   if (mode === 'textToMorse') {
-    toMorseBtn.disabled = false;
     toMorseBtn.style.backgroundColor = '';
     toMorseBtn.style.cursor = 'pointer';
 
-    toTextBtn.disabled = true;
     toTextBtn.style.backgroundColor = 'lightgreen';
-    toTextBtn.style.cursor = 'default';
+    toTextBtn.style.cursor = 'not-allowed';
   } else {
-    toTextBtn.disabled = false;
     toTextBtn.style.backgroundColor = '';
     toTextBtn.style.cursor = 'pointer';
 
-    toMorseBtn.disabled = true;
     toMorseBtn.style.backgroundColor = 'lightgreen';
-    toMorseBtn.style.cursor = 'default';
+    toMorseBtn.style.cursor = 'not-allowed';
   }
 }
+
 window.onload = () => {
   toggleButtons();
 };
