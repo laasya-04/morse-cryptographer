@@ -10,6 +10,13 @@ if ('serviceWorker' in navigator){
    });
 }
 
+function toggleButtons() {
+  const mode = document.querySelector('input[name="mode"]:checked').value;
+  document.getElementById('toMorseBtn').disabled = (mode === 'morseToText');
+  document.getElementById('toTextBtn').disabled = (mode === 'textToMorse');
+}
+window.onload = toggleButtons;
+
 let pressStartTime=0;
 let isSpaceHeld=false;
 
