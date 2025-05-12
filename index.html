@@ -19,14 +19,14 @@
   </div>  
   <div class="container">
     
-    <div>
-      <label>
-        <input type="radio" name="mode" value="textToMorse" checked onchange="toggleButtons()"> Text to Morse
-      </label>
-      <label>
-        <input type="radio" name="mode" value="morseToText" onchange="toggleButtons()"> Morse to Text
-      </label>
-    </div>
+   <div>
+      <label for="modeSelect">Choose mode:</label>
+      <select id="modeSelect" onchange="toggleButtons()">
+        <option value="textToMorse" selected>Text to Morse</option>
+        <option value="morseToText">Morse to Text</option>
+      </select>
+  </div>
+
     
     <textarea id="textInput" placeholder="Enter text or Morse code..."></textarea>
     <br/>
