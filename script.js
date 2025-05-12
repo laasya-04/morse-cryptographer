@@ -24,7 +24,10 @@ function toggleButtons() {
     toTextBtn.disabled = false;
   }
 }
-window.addEventListener('DOMContentLoaded', toggleButtons);
+window.onload = () => {
+  toggleButtons();
+};
+
 
 
 let pressStartTime=0;
