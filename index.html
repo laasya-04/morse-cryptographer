@@ -20,7 +20,7 @@
   <div class="container">
 
     <div class="mode-selector">
-      <label for="modeSelect">Choose mode:</label>
+      <label for="modeSelect">Choose converter type:</label>
       <select id="modeSelect" onchange="toggleButtons()">
         <option value="textToMorse" selected>Text to Morse</option>
         <option value="morseToText">Morse to Text</option>
@@ -41,7 +41,14 @@
     <button onclick="stopMorse()">⏹ Stop</button>
     <button onclick="repeatMorse()">🔁 Repeat</button>
   </div>
-  <p>NOTE: Can Use Arrow Up key for maual press of the Morse Code</p>
+   <p>
+      » <b>For keypress length-based morse input:</b><br>
+      • Use the <b>UP arrow key</b>.<br>
+      • Press upto 500ms to generate a dot (.).<br>
+      • Press longer than 500ms to generate a dash (-).<br>
+      • Press spacebar once to end current character.<br>
+      • Press spacebar thrice to end current word.<br>
+    </p>
   <footer>Made with 💙 for Morse code enthusiasts</footer>
   <script src="script.js"></script>
 </body>
