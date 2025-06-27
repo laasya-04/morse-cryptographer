@@ -19,12 +19,19 @@
   }
 ],
   "screenshots": [
-    {
-      "src": "screenshots/home.png",
-      "sizes": "512x1024",
-      "type": "image/png",
-      "label": "Morse Cryptographer - Home screen"
-    }
-  ]
+  {
+    "src": "screenshots/home-desktop.png",
+    "sizes": "1919x888",
+    "type": "image/png",
+    "label": "Desktop view of Morse Cryptographer",
+    "form_factor": "wide"
+  },
+  {
+    "src": "screenshots/home-mobile.jpg",
+    "sizes": "956x1600",
+    "type": "image/jpg",
+    "label": "Mobile view of Morse Cryptographer"
+  }
+]
 
 }
