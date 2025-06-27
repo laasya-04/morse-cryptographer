@@ -2,7 +2,7 @@
   "name": "Morse Cryptographer",
   "short_name": "MorseApp",
   "description": "Convert text to Morse code and vice versa",
-  "start_url": "./about.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
