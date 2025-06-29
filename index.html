@@ -7,8 +7,6 @@
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="icons/icon-192.png" type="image/png" />
-
-
 </head>
 <body>
   <canvas id="morseBackground"></canvas>
@@ -20,8 +18,8 @@
       <button onclick="window.location.href='howtouse.html'">How to Use</button>
     </div>
   </div>  
-  <div class="container">
 
+  <div class="container">
     <div class="mode-selector">
       <label for="modeSelect">Choose converter type:</label>
       <select id="modeSelect" onchange="toggleButtons()">
@@ -30,28 +28,35 @@
       </select>
     </div>
 
-    
     <textarea id="textInput" placeholder="Enter text or Morse code..."></textarea>
     <br/>
+
     <button id="toMorseBtn" onclick="convertToMorse()">To Morse</button>
     <button id="toTextBtn" onclick="convertToText()">To Text</button>
     <p id="errorMsg" class="error-msg"></p>
     <br/>
-    <textarea id="resultOutput" placeholder="Result will appear here..."></textarea>
+
+    <!-- ⬇ REPLACED TEXTAREA with DIV -->
+    <div id="resultOutput" class="output-box" contenteditable="false"></div>
+       <textarea id="resultOutputHidden"
+       style="display: none;"></textarea>
+    
     <br/>
     <button onclick="playMorse()">▶ Play</button>
     <button onclick="pauseMorse()">⏸ Pause</button>
     <button onclick="stopMorse()">⏹ Stop</button>
     <button onclick="repeatMorse()">🔁 Repeat</button>
   </div>
-   <p align="center">
-      » <b>For keypress length-based morse input:</b><br>
-      • Use the <b>UP arrow key</b>.<br>
-      • Press upto 500ms to generate a dot (.).<br>
-      • Press longer than 500ms to generate a dash (-).<br>
-      • Press spacebar once to end current character.<br>
-      • Press spacebar thrice to end current word.<br>
-    </p>
+
+  <p align="center">
+    » <b>For keypress length-based morse input:</b><br>
+    • Use the <b>UP arrow key</b>.<br>
+    • Press up to 500ms to generate a dot (.)<br>
+    • Press longer than 500ms to generate a dash (-)<br>
+    • Press spacebar once to end current character<br>
+    • Press spacebar thrice to end current word<br>
+  </p>
+
   <footer>Made with 💙 for Morse code enthusiasts</footer>
   <script src="script.js"></script>
 </body>
