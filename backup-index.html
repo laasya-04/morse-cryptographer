@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Morse Code Cryptographer</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="icons/icon-192.png" type="image/png" />
+
+
+</head>
+<body>
+  <canvas id="morseBackground"></canvas>
+
+  <div class="top-bar">
+    <h1>Morse Code Cryptographer</h1>
+    <div class="top-links">
+      <button onclick="window.location.href='about.html'">About</button>
+      <button onclick="window.location.href='howtouse.html'">How to Use</button>
+    </div>
+  </div>  
+  <div class="container">
+
+    <div class="mode-selector">
+      <label for="modeSelect">Choose converter type:</label>
+      <select id="modeSelect" onchange="toggleButtons()">
+        <option value="textToMorse" selected>Text to Morse</option>
+        <option value="morseToText">Morse to Text</option>
+      </select>
+    </div>
+
+    
+    <textarea id="textInput" placeholder="Enter text or Morse code..."></textarea>
+    <br/>
+    <button id="toMorseBtn" onclick="convertToMorse()">To Morse</button>
+    <button id="toTextBtn" onclick="convertToText()">To Text</button>
+    <p id="errorMsg" class="error-msg"></p>
+    <br/>
+    <textarea id="resultOutput" placeholder="Result will appear here..."></textarea>
+    <br/>
+    <button onclick="playMorse()">▶ Play</button>
+    <button onclick="pauseMorse()">⏸ Pause</button>
+    <button onclick="stopMorse()">⏹ Stop</button>
+    <button onclick="repeatMorse()">🔁 Repeat</button>
+  </div>
+   <p align="center">
+      » <b>For keypress length-based morse input:</b><br>
+      • Use the <b>UP arrow key</b>.<br>
+      • Press upto 500ms to generate a dot (.).<br>
+      • Press longer than 500ms to generate a dash (-).<br>
+      • Press spacebar once to end current character.<br>
+      • Press spacebar thrice to end current word.<br>
+    </p>
+  <footer>Made with 💙 for Morse code enthusiasts</footer>
+  <script src="script.js"></script>
+</body>
+</html>
