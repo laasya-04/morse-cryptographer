@@ -133,9 +133,3 @@ footer {
 .morse-char {
   padding: 2px;
 }
-
-.morse-char.highlight {
-  background-color: yellow;
-  color: black;
-  font-weight: bold;
-}
