@@ -124,9 +124,11 @@ footer {
   padding: 0 2px;
 }
 .morse-char.highlight {
-  background-color: yellow;
-  color: black;
-  font-weight: bold;
+  background-color: #00ffff; /* bright cyan */
+  color: #000;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
 }
 .morse-char {
   padding: 2px;
