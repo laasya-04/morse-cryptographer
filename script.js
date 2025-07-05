@@ -12,7 +12,8 @@ function toggleButtons() {
   document.getElementById('toTextBtn').disabled = (mode !== 'morseToText');
   if (mode === 'textToMorse') {
     toTextBtn.style.backgroundColor = 'lightgreen';
-  }else{
+  }
+  if(mode === 'morseToText'){
     toMorseBtn.style.backgroundColor = 'lightgreen';
   }
 }
