@@ -10,6 +10,11 @@ function toggleButtons() {
   const mode = document.getElementById('modeSelect').value;
   document.getElementById('toMorseBtn').disabled = (mode !== 'textToMorse');
   document.getElementById('toTextBtn').disabled = (mode !== 'morseToText');
+  if (mode === 'textToMorse') {
+    toTextBtn.style.backgroundColor = 'lightgreen';
+  }else{
+    toMorseBtn.style.backgroundColor = 'lightgreen';
+  }
 }
 window.onload = () => toggleButtons();
 
