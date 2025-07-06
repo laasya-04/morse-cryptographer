@@ -118,7 +118,6 @@ function pauseMorse() {
   isPaused = !isPaused;
   if (!isPaused) playMorse();
   else clearTimeout(playbackTimer);
-  document.getElementById('stop').style.backgroundColor='lightgreen';
 }
 
 function stopMorse() {
@@ -127,14 +126,11 @@ function stopMorse() {
   isPaused = false;
   playbackIndex = 0;
   document.querySelectorAll('.morse-char').forEach(el => el.classList.remove('highlight'));
-  document.getElementById('pause').style.backgroundColor='lightgreen';
-  document.getElementById('repeat').style.backgroundColor='lightgreen';
 }
 
 function repeatMorse() {
   stopMorse();
   playMorse();
-  document.getElementById('pause').style.backgroundColor='lightgreen';
 }
 
 // Canvas animation background
