@@ -86,8 +86,6 @@ function playMorse() {
   const chars = Array.from(document.querySelectorAll('.morse-char'));
   playSymbols(chars);
   document.getElementById('repeat').style.backgroundColor='lightgreen';
-  document.getElementById('pause').style.backgroundColor= #0ff;
-  document.getElementById('stop').style.backgroundColor= #0ff;
 }
 
 function playSymbols(chars) {
