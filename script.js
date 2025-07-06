@@ -85,6 +85,13 @@ function playMorse() {
   isPaused = false;
   const chars = Array.from(document.querySelectorAll('.morse-char'));
   playSymbols(chars);
+  disableButton("repeatBtn");
+}
+
+function disableButton(id) {
+  const btn = document.getElementById(id);
+  btn.disabled = true;
+  btn.style.backgroundColor = "lightgreen";
 }
 
 function playSymbols(chars) {
@@ -117,6 +124,7 @@ function pauseMorse() {
   isPaused = !isPaused;
   if (!isPaused) playMorse();
   else clearTimeout(playbackTimer);
+  disableButton("stopBtn");
 }
 
 function stopMorse() {
@@ -125,6 +133,7 @@ function stopMorse() {
   isPaused = false;
   playbackIndex = 0;
   document.querySelectorAll('.morse-char').forEach(el => el.classList.remove('highlight'));
+  disableButton("pauseBtn");
 }
 
 function repeatMorse() {
