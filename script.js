@@ -65,10 +65,6 @@ function convertToText() {
     .map(word => word.split(' ').map(code => reverseMorseCodeMap[code] || '').join(''))
     .join(' ');
   document.getElementById('resultOutput').innerHTML = text;
-  const allButtons = document.querySelectorAll('button');
-  allButtons.forEach(button => {
-    button.style.backgroundColor = 'lightgreen';
-  });
 }
 
 let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
