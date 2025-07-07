@@ -119,6 +119,14 @@ function pauseMorse() {
   else clearTimeout(playbackTimer);
 }
 
+function stopMorse() {
+  clearTimeout(playbackTimer);
+  isPaused = true;
+  playbackIndex = 0;
+  if (oscillator) oscillator.stop();
+}
+
+
 // Canvas animation background
 const canvas = document.getElementById('morseBackground');
 const ctx = canvas.getContext('2d');
