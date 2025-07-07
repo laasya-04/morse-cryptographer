@@ -16,6 +16,8 @@ function toggleButtons() {
   toTextBtn.disabled = (mode !== 'morseToText');
   toMorseBtn.style.backgroundColor = '';
   toTextBtn.style.backgroundColor = '';
+  playBtn.style.backgroundColor = '';
+  pauseBtn.style.backgroundColor = '';
   if (mode === 'textToMorse') {
     toTextBtn.style.backgroundColor = 'lightgreen';
     playBtn.disabled = false;
@@ -24,6 +26,8 @@ function toggleButtons() {
     toMorseBtn.style.backgroundColor = 'lightgreen';
     playBtn.disabled = true;
     pauseBtn.disabled = true;
+    playBtn.style.backgroundColor = 'lightgreen';
+    pauseBtn.style.backgroundColor = 'lightgreen';
   }
 }
 window.onload = () => toggleButtons();
