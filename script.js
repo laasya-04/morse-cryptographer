@@ -26,9 +26,14 @@ function toggleButtons() {
     toMorseBtn.style.backgroundColor = 'lightgreen';
     playBtn.disabled = true;
     pauseBtn.disabled = true;
-    playBtn.style.backgroundColor = 'lightgreen';
-    pauseBtn.style.backgroundColor = 'lightgreen';
+    //playBtn.style.backgroundColor = 'lightgreen';
+    //pauseBtn.style.backgroundColor = 'lightgreen';
   }
+  [toMorseBtn, toTextBtn, playBtn, pauseBtn].forEach(btn => {
+    if(btn.disabled){
+      btn.style.backgroundColor ='lightgreen';
+    }
+  });
 }
 window.onload = () => toggleButtons();
 
