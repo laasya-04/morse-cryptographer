@@ -18,10 +18,12 @@ function toggleButtons() {
   toTextBtn.style.backgroundColor = '';
   if (mode === 'textToMorse') {
     toTextBtn.style.backgroundColor = 'lightgreen';
+    playBtn.disabled = false;
+    pauseBtn.disabled = false;
   } else if (mode === 'morseToText') {
     toMorseBtn.style.backgroundColor = 'lightgreen';
-    playBtn.style.backgroundColor ='lightgreen';
-    pauseBtn.style.backgroundColor ='lightgreen';
+    playBtn.disabled = true;
+    pauseBtn.disabled = true;
   }
 }
 window.onload = () => toggleButtons();
