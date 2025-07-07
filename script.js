@@ -164,6 +164,11 @@ function pauseMorse() {
     pauseBtn.disabled = true;
     clearTimeout(playbackTimer);
   }
+  [playBtn, pauseBtn].forEach(btn => {
+    if(btn.disabled){
+      btn.style.backgroundColor ='lightgreen';
+    }
+  });
 }
 
 
