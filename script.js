@@ -83,9 +83,12 @@ document.body.addEventListener('click', () => {
 function playMorse() {
   stopMorse();
   isPaused = false;
+  document.getElementById('playBtn').disabled = true;
+  document.getElementById('pauseBtn').disabled = false;
   const chars = Array.from(document.querySelectorAll('.morse-char'));
   playSymbols(chars);
 }
+
 
 function playSymbols(chars) {
   if (playbackIndex >= chars.length || isPaused) return;
@@ -115,9 +118,19 @@ function playSymbols(chars) {
 
 function pauseMorse() {
   isPaused = !isPaused;
-  if (!isPaused) playMorse();
-  else clearTimeout(playbackTimer);
+  const playBtn = document.getElementById('playBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  if (!isPaused) {
+    playBtn.disabled = true;
+    pauseBtn.disabled = false;
+    playMorse(); 
+  } else {
+    playBtn.disabled = false;
+    pauseBtn.disabled = true;
+    clearTimeout(playbackTimer);
+  }
 }
+
 
 function stopMorse() {
   clearTimeout(playbackTimer);
