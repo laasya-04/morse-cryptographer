@@ -10,18 +10,19 @@ function toggleButtons() {
   const mode = document.getElementById('modeSelect').value;
   const toMorseBtn = document.getElementById('toMorseBtn');
   const toTextBtn = document.getElementById('toTextBtn');
+  const playBtn = document.getElementById('playBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
   toMorseBtn.disabled = (mode !== 'textToMorse');
   toTextBtn.disabled = (mode !== 'morseToText');
-  toMorseBtn.style.backgroundColor = '';
-  toTextBtn.style.backgroundColor = '';
+  playBtn.disabled = (mode !== 'textToMorse');
+  pauseBtn.disabled = (mode !== 'textToMorse');
+  [toMorseBtn, toTextBtn, playBtn, pauseBtn].forEach(btn => {
+    btn.style.backgroundColor = btn.disabled ? 'lightgreen' : '';
+  });
   if (mode === 'textToMorse') {
     toTextBtn.style.backgroundColor = 'lightgreen';
-    playBtn.disabled = false;
-    pauseBtn.disabled = false;
   } else if (mode === 'morseToText') {
     toMorseBtn.style.backgroundColor = 'lightgreen';
-    playBtn.disabled = true;
-    pauseBtn.disabled = true;
   }
 }
 window.onload = () => toggleButtons();
