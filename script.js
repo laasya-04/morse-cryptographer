@@ -63,13 +63,17 @@ const reverseMorseCodeMap = Object.fromEntries(
 
 function convertToMorse() {
   const mode = document.getElementById('modeSelect').value;
+  const errorMsg = document.getElementById('errorMsg');
+  if(mode!=='textToMorse'){
+      errorMsg.textContent = 'Invalid input for Chosen convertor';
+     return ;
+  } 
+  errorMsg.textContent='';
   if (mode !== 'textToMorse') return;
-
   const text = document.getElementById('textInput').value.toUpperCase();
   const morse = text.split('').map(char => morseCodeMap[char] || '').join(' ');
   const outputDiv = document.getElementById('resultOutput');
   outputDiv.innerHTML = '';
-
   morse.split('').forEach(symbol => {
     const span = document.createElement('span');
     span.textContent = symbol;
@@ -82,8 +86,11 @@ function convertToMorse() {
 
 function convertToText() {
   const mode = document.getElementById('modeSelect').value;
-  if (mode !== 'morseToText') return;
-
+  const errorMsg = document.getElementByIf('errorMsg');
+  if (mode !== 'morseToText'){
+    errorMsg.textContent = 'Invalid input for chosen converter'; 
+    return;
+  }
   const morse = document.getElementById('textInput').value.trim();
   const words = morse.split('   ');
   const text = words
