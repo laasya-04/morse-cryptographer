@@ -118,10 +118,17 @@ document.body.addEventListener('click', () => {
 function playMorse() {
   stopMorse();
   isPaused = false;
-  document.getElementById('playBtn').disabled = true;
-  document.getElementById('pauseBtn').disabled = false;
+  const playBtn = document.getElementById('playBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  playBtn.disabled = true;
+  pauseBtn.disabled = false;
   const chars = Array.from(document.querySelectorAll('.morse-char'));
   playSymbols(chars);
+  [playBtn, pauseBtn].forEach(btn => {
+    if(btn.disabled){
+      btn.style.backgroundColor ='lightgreen';
+    }
+  });
 }
 
 
