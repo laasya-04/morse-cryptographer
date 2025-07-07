@@ -22,6 +22,26 @@ function toggleButtons() {
 }
 window.onload = () => toggleButtons();
 
+let pressStartTime=0;
+let isSpaceHeld=false;
+document.addEventListener('keydown',(e) => {
+  if(e.code === 'ArrowUp' && !isSpaceHeld) {
+    pressStartTime = Date.now();
+    isSpaceHeld=true;
+    e.preventDefault();
+  }
+});
+document.addEventListener('keyup', (e) => {
+  if (e.code === 'ArrowUp'&& isSpaceHeld) {
+    const duration = Date.now() - pressStartTime;
+    isSpaceHeld=false;
+    const threshold = 500; 
+    const symbol = duration < threshold?'.':'-';
+    const input = document.getElementById('textInput');
+    input.value += symbol; 
+  }
+});
+
 const morseCodeMap = {
   'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
   'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
