@@ -86,11 +86,12 @@ function convertToMorse() {
 
 function convertToText() {
   const mode = document.getElementById('modeSelect').value;
-  const errorMsg = document.getElementByIf('errorMsg');
-  if (mode !== 'morseToText'){
-    errorMsg.textContent = 'Invalid input for chosen converter'; 
+  const errorMsg = document.getElementById('errorMsg');
+  if (mode !== 'morseToText') {
+    errorMsg.textContent = 'Invalid input for chosen converter';
     return;
   }
+  errorMsg.textContent = ''; // Clear previous error
   const morse = document.getElementById('textInput').value.trim();
   const words = morse.split('   ');
   const text = words
