@@ -11,32 +11,37 @@ const monoAlphaReverseKey = Object.fromEntries(
   Object.entries(monoAlphaKey).map(([k, v]) => [v, k])
 );
 
+// Service Worker Registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(reg => console.log('SW registered', reg))
+      .catch(err => console.error('SW registration failed', err));
+  });
+}
+
 // Morse Code Mappings
 const morseCodeMap = {
   'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
   'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
   'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.',
   'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
-  'Y': '-.--', 'Z': '--..', '0': '-----', '1': '.----', '2': '..---',
-  '3': '...--', '4': '....-', '5': '.....', '6': '-....', '7': '--...',
-  '8': '---..', '9': '----.', ' ': '/'
+  'Y': '-.--', 'Z': '--..',
+  '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-',
+  '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.',
+  ' ': '/'
 };
 
 const reverseMorseCodeMap = Object.fromEntries(
   Object.entries(morseCodeMap).map(([k, v]) => [v, k])
 );
 
-// Button Toggle based on mode and input
+// Toggle buttons for mode
 function toggleButtons() {
   const mode = document.getElementById('modeSelect').value;
-  const input = document.getElementById('textInput').value.trim();
-  const morseBtn = document.getElementById('toMorseBtn');
-  const textBtn = document.getElementById('toTextBtn');
-
-  morseBtn.disabled = !(mode === 'textToMorse' && input.length > 0);
-  textBtn.disabled = !(mode === 'morseToText' && input.length > 0);
+  document.getElementById('toMorseBtn').disabled = (mode !== 'textToMorse');
+  document.getElementById('toTextBtn').disabled = (mode !== 'morseToText');
 }
-
 window.onload = () => toggleButtons();
 
 // Convert to Morse (with Monoalphabetic Encryption)
@@ -45,6 +50,8 @@ function convertToMorse() {
   if (mode !== 'textToMorse') return;
 
   let text = document.getElementById('textInput').value.toUpperCase();
+
+  // Monoalphabetic encryption
   text = text.replace(/[A-Z]/g, char => monoAlphaKey[char] || char);
 
   const morse = text.split('').map(char => morseCodeMap[char] || '').join(' ');
@@ -72,25 +79,110 @@ function convertToText() {
     word.split(' ').map(code => reverseMorseCodeMap[code] || '').join('')
   ).join(' ');
 
+  // Monoalphabetic decryption
   text = text.replace(/[A-Z]/g, char => monoAlphaReverseKey[char] || char);
+
   document.getElementById('resultOutput').innerHTML = text;
 }
 
-// Keypress timing logic for dot/dash
-let keyPressStart = null;
+// Audio Playback
+let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let oscillator;
+let isPaused = false;
+let playbackIndex = 0;
+let playbackTimer;
 
-document.addEventListener('keydown', (e) => {
-  if (e.code === 'ArrowUp' && keyPressStart === null) {
-    keyPressStart = Date.now();
-  }
-});
+function playMorse() {
+  stopMorse();
+  isPaused = false;
+  const chars = Array.from(document.querySelectorAll('.morse-char'));
+  playSymbols(chars);
+}
 
-document.addEventListener('keyup', (e) => {
-  if (e.code === 'ArrowUp' && keyPressStart !== null) {
-    const duration = Date.now() - keyPressStart;
-    const input = document.getElementById('textInput');
-    input.value += duration <= 500 ? '.' : '-';
-    keyPressStart = null;
-    toggleButtons();
+function playSymbols(chars) {
+  if (playbackIndex >= chars.length || isPaused) return;
+
+  const currentChar = chars[playbackIndex];
+  const symbol = currentChar.textContent;
+
+  if (symbol === '.' || symbol === '-') {
+    oscillator = audioCtx.createOscillator();
+    oscillator.frequency.value = 600;
+    oscillator.type = 'sine';
+    oscillator.connect(audioCtx.destination);
+    oscillator.start();
+
+    currentChar.classList.add('highlight');
+    const duration = (symbol === '.' ? 150 : 400);
+    setTimeout(() => {
+      oscillator.stop();
+      currentChar.classList.remove('highlight');
+      playbackIndex++;
+      playbackTimer = setTimeout(() => playSymbols(chars), 150);
+    }, duration);
+  } else {
+    playbackIndex++;
+    playbackTimer = setTimeout(() => playSymbols(chars), 150);
   }
+}
+
+function pauseMorse() {
+  isPaused = !isPaused;
+  if (!isPaused) playMorse();
+  else clearTimeout(playbackTimer);
+}
+
+function stopMorse() {
+  clearTimeout(playbackTimer);
+  if (oscillator) oscillator.stop();
+  isPaused = false;
+  playbackIndex = 0;
+  document.querySelectorAll('.morse-char').forEach(el =>
+    el.classList.remove('highlight')
+  );
+}
+
+function repeatMorse() {
+  stopMorse();
+  playMorse();
+}
+
+// Canvas Background Animation
+const canvas = document.getElementById('morseBackground');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const particles = [];
+const symbols = ['.', '-'];
+for (let i = 0; i < 200; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    speed: 0.5 + Math.random() * 1.5,
+    symbol: symbols[Math.floor(Math.random() * 2)],
+    size: 20 + Math.random() * 20,
+    opacity: 0.3 + Math.random() * 0.7
+  });
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    ctx.fillStyle = `rgba(0, 255, 255, ${p.opacity})`;
+    ctx.font = `${p.size}px Courier New`;
+    ctx.fillText(p.symbol, p.x, p.y);
+    p.y += p.speed;
+    if (p.y > canvas.height) {
+      p.y = -20;
+      p.x = Math.random() * canvas.width;
+    }
+  });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 });
