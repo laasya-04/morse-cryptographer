@@ -95,19 +95,30 @@ function convertToMorse() {
 
   // Note: encrypted and decrypted values are used silently, not shown
 }
-function convertToText(){
+
+function convertToText() {
   const mode = document.getElementById('modeSelect').value;
-  if(mode!== 'morseToText') return;
-  const morse=document.getElementById('textInput').value.trim();
-  if(!morse) return;
-  const words= morse.split('   ');
-  const encryptedText=words.map(word =>
+  if (mode !== 'morseToText') return;
+
+  const morse = document.getElementById('textInput').value.trim();
+  if (!morse) return;
+
+  // Split Morse code into words
+  const words = morse.split('   ');
+
+  // Convert Morse code to encrypted text
+  const encryptedText = words.map(word =>
     word.split(' ').map(code => reverseMorseCodeMap[code] || '').join('')
-    ).join(' ');
-  const originalText=encryptedText.replace(/[A-Z]/g, char => monoAlphaReverseKey[char] || char);
-  const outputDiv=document.getElementById('resultOutput');
+  ).join(' ');
+
+  // Decrypt the encrypted text to get the original text
+  const originalText = encryptedText.replace(/[A-Z]/g, char => monoAlphaReverseKey[char] || char);
+
+  // Display the original text in the output div
+  const outputDiv = document.getElementById('resultOutput');
   outputDiv.innerHTML = originalText;
 }
+
 
 
 // Audio Playback
