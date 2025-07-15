@@ -1,3 +1,17 @@
+// Caesar Cipher Functions (always active)
+function caesarEncrypt(text, shift = 3) {
+  return text.toUpperCase().replace(/[A-Z]/g, c =>
+    String.fromCharCode((c.charCodeAt(0) - 65 + shift) % 26 + 65)
+  );
+}
+
+function caesarDecrypt(text, shift = 3) {
+  return text.toUpperCase().replace(/[A-Z]/g, c =>
+    String.fromCharCode((c.charCodeAt(0) - 65 - shift + 26) % 26 + 65)
+  );
+}
+
+// Service Worker Registration
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('service-worker.js')
@@ -6,47 +20,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-function toggleButtons() {
-  const mode = document.getElementById('modeSelect').value;
-  const toMorseBtn = document.getElementById('toMorseBtn');
-  const toTextBtn = document.getElementById('toTextBtn');
-  const playBtn = document.getElementById('playBtn');
-  const pauseBtn = document.getElementById('pauseBtn');
-  toMorseBtn.disabled = (mode !== 'textToMorse');
-  toTextBtn.disabled = (mode !== 'morseToText');
-  playBtn.disabled = (mode !== 'textToMorse');
-  pauseBtn.disabled = (mode !== 'textToMorse');
-  [toMorseBtn, toTextBtn, playBtn, pauseBtn].forEach(btn => {
-    btn.style.backgroundColor = btn.disabled ? 'lightgreen' : '';
-  });
-  if (mode === 'textToMorse') {
-    toTextBtn.style.backgroundColor = 'lightgreen';
-  } else if (mode === 'morseToText') {
-    toMorseBtn.style.backgroundColor = 'lightgreen';
-  }
-}
-window.onload = () => toggleButtons();
-
-let pressStartTime=0;
-let isSpaceHeld=false;
-document.addEventListener('keydown',(e) => {
-  if(e.code === 'ArrowUp' && !isSpaceHeld) {
-    pressStartTime = Date.now();
-    isSpaceHeld=true;
-    e.preventDefault();
-  }
-});
-document.addEventListener('keyup', (e) => {
-  if (e.code === 'ArrowUp'&& isSpaceHeld) {
-    const duration = Date.now() - pressStartTime;
-    isSpaceHeld=false;
-    const threshold = 500; 
-    const symbol = duration < threshold?'.':'-';
-    const input = document.getElementById('textInput');
-    input.value += symbol; 
-  }
-});
-
+// Morse Code Mappings
 const morseCodeMap = {
   'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
   'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
@@ -57,17 +31,31 @@ const morseCodeMap = {
   '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.',
   ' ': '/'
 };
+
 const reverseMorseCodeMap = Object.fromEntries(
   Object.entries(morseCodeMap).map(([k, v]) => [v, k])
 );
 
+// Toggle buttons for mode
+function toggleButtons() {
+  const mode = document.getElementById('modeSelect').value;
+  document.getElementById('toMorseBtn').disabled = (mode !== 'textToMorse');
+  document.getElementById('toTextBtn').disabled = (mode !== 'morseToText');
+}
+window.onload = () => toggleButtons();
+
+// Convert to Morse
 function convertToMorse() {
   const mode = document.getElementById('modeSelect').value;
   if (mode !== 'textToMorse') return;
-  const text = document.getElementById('textInput').value.toUpperCase();
+
+  let text = document.getElementById('textInput').value.toUpperCase();
+  text = caesarEncrypt(text, 3); // always encrypt
+
   const morse = text.split('').map(char => morseCodeMap[char] || '').join(' ');
   const outputDiv = document.getElementById('resultOutput');
   outputDiv.innerHTML = '';
+
   morse.split('').forEach(symbol => {
     const span = document.createElement('span');
     span.textContent = symbol;
@@ -78,42 +66,38 @@ function convertToMorse() {
   });
 }
 
+// Convert Morse to Text
 function convertToText() {
   const mode = document.getElementById('modeSelect').value;
-  if (mode !== 'morseToText')return;
+  if (mode !== 'morseToText') return;
+
   const morse = document.getElementById('textInput').value.trim();
   const words = morse.split('   ');
-  const text = words
-    .map(word => word.split(' ').map(code => reverseMorseCodeMap[code] || '').join(''))
-    .join(' ');
+  let text = words.map(word =>
+    word.split(' ').map(code => reverseMorseCodeMap[code] || '').join('')
+  ).join(' ');
+
+  text = caesarDecrypt(text, 3); // always decrypt
   document.getElementById('resultOutput').innerHTML = text;
 }
 
+// Audio Playback
 let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 let oscillator;
 let isPaused = false;
 let playbackIndex = 0;
 let playbackTimer;
 
-// Resume audio context on first user interaction (for browser autoplay policies)
-document.body.addEventListener('click', () => {
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
-}, { once: true });
-
 function playMorse() {
   stopMorse();
   isPaused = false;
-  document.getElementById('playBtn').disable = true;
-  document.getElementById('playBtn').disable = false;
   const chars = Array.from(document.querySelectorAll('.morse-char'));
   playSymbols(chars);
 }
 
-
 function playSymbols(chars) {
   if (playbackIndex >= chars.length || isPaused) return;
+
   const currentChar = chars[playbackIndex];
   const symbol = currentChar.textContent;
 
@@ -140,29 +124,26 @@ function playSymbols(chars) {
 
 function pauseMorse() {
   isPaused = !isPaused;
-  const playBtn = document.getElementById('playBtn');
-  const pauseBtn = document.getElementById('pauseBtn');
-  if (!isPaused) {
-    playBtn.disabled = true;
-    pauseBtn.disabled = false;
-    playMorse(); 
-  } else {
-    playBtn.disabled = false;
-    pauseBtn.disabled = true;
-    clearTimeout(playbackTimer);
-  }
+  if (!isPaused) playMorse();
+  else clearTimeout(playbackTimer);
 }
-
 
 function stopMorse() {
   clearTimeout(playbackTimer);
-  isPaused = true;
-  playbackIndex = 0;
   if (oscillator) oscillator.stop();
+  isPaused = false;
+  playbackIndex = 0;
+  document.querySelectorAll('.morse-char').forEach(el =>
+    el.classList.remove('highlight')
+  );
 }
 
+function repeatMorse() {
+  stopMorse();
+  playMorse();
+}
 
-// Canvas animation background
+// Canvas Background Animation
 const canvas = document.getElementById('morseBackground');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
