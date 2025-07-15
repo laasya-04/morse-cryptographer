@@ -63,25 +63,20 @@ function convertToMorse() {
   });
 }
 
-// --- Morse → Text with Cipher Reversal ---
 function convertToText() {
   const mode = document.getElementById('modeSelect').value;
   if (mode !== 'morseToText') return;
 
   const morse = document.getElementById('textInput').value.trim();
 
-  // Step 1: Morse → Characters (should give encrypted characters)
-  const words = morse.split('   ');
-  const encryptedText = words.map(word =>
+  const words = morse.split('   '); // 3 spaces = new word
+  const plainText = words.map(word =>
     word.split(' ').map(code => reverseMorseCodeMap[code] || '').join('')
   ).join(' ');
 
-  // Step 2: Decrypt it
-  const decryptedText = encryptedText.split('').map(char => reverseMonoAlphaKey[char] || char).join('');
-
-  // Step 3: Show decrypted original message
-  document.getElementById('resultOutput').innerHTML = decryptedText;
+  document.getElementById('resultOutput').innerHTML = plainText;
 }
+
 
 
 // --- Button Toggle Logic ---
