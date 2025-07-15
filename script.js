@@ -186,3 +186,25 @@ window.addEventListener('resize', () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 });
+// Morse input via ArrowUp key based on duration
+let keyPressStart = null;
+
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'ArrowUp' && keyPressStart === null) {
+    keyPressStart = Date.now();
+  }
+});
+
+document.addEventListener('keyup', (e) => {
+  if (e.code === 'ArrowUp' && keyPressStart !== null) {
+    const duration = Date.now() - keyPressStart;
+    const inputField = document.getElementById('textInput');
+    const symbol = (duration <= 500) ? '.' : '-';
+    inputField.value += symbol;
+    keyPressStart = null;
+
+    // Update button state
+    toggleButtons();
+  }
+});
+
