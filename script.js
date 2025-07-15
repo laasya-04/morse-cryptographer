@@ -103,18 +103,18 @@ function convertToText() {
   const morse = document.getElementById('textInput').value.trim();
   if (!morse) return;
 
-  // Split Morse code into words
   const words = morse.split('   ');
 
-  // Convert Morse code to encrypted text
+  // Convert Morse to encrypted letters
   const encryptedText = words.map(word =>
     word.split(' ').map(code => reverseMorseCodeMap[code] || '').join('')
   ).join(' ');
 
-  // Decrypt the encrypted text to get the original text
-  const originalText = encryptedText.replace(/[A-Z]/g, char => monoAlphaReverseKey[char] || char);
+  // Proper decryption using monoAlphaReverseKey
+  const originalText = encryptedText.split('').map(char =>
+    monoAlphaReverseKey[char] || char
+  ).join('');
 
-  // Display the original text in the output div
   const outputDiv = document.getElementById('resultOutput');
   outputDiv.innerHTML = originalText;
 }
