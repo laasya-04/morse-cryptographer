@@ -39,9 +39,28 @@ const reverseMorseCodeMap = Object.fromEntries(
 // Toggle buttons for mode
 function toggleButtons() {
   const mode = document.getElementById('modeSelect').value;
-  document.getElementById('toMorseBtn').disabled = (mode !== 'textToMorse');
-  document.getElementById('toTextBtn').disabled = (mode !== 'morseToText');
+
+  const toMorseBtn = document.getElementById('toMorseBtn');
+  const toTextBtn = document.getElementById('toTextBtn');
+  const playBtn = document.getElementById('playBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+
+  const isTextToMorse = (mode === 'textToMorse');
+
+  toMorseBtn.disabled = !isTextToMorse;
+  toTextBtn.disabled = isTextToMorse;
+
+  // 🔒 Disable Play & Pause in "Morse to Text" mode
+  playBtn.disabled = !isTextToMorse;
+  pauseBtn.disabled = !isTextToMorse;
+
+  // Optional: Add styles and cursor for disabled buttons
+  [playBtn, pauseBtn].forEach(btn => {
+    btn.style.cursor = btn.disabled ? "not-allowed" : "pointer";
+    btn.style.backgroundColor = btn.disabled ? "#ccc" : ""; // Optional color effect
+  });
 }
+
 window.onload = () => toggleButtons();
 
 // Convert to Morse (with Monoalphabetic Encryption)
