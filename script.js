@@ -102,16 +102,22 @@ function convertToText() {
   if (mode !== 'morseToText') return;
 
   const morse = document.getElementById('textInput').value.trim();
+  if (!morse) return;
+
+  // Step 1: Convert Morse to text (this will be encrypted if originally encrypted)
   const words = morse.split('   ');
-  let text = words.map(word =>
+  let encryptedText = words.map(word =>
     word.split(' ').map(code => reverseMorseCodeMap[code] || '').join('')
   ).join(' ');
 
-  // Monoalphabetic decryption
-  text = text.replace(/[A-Z]/g, char => monoAlphaReverseKey[char] || char);
+  // Step 2: Decrypt the encrypted text back to original
+  const decryptedText = encryptedText.replace(/[A-Z]/g, char => monoAlphaReverseKey[char] || char);
 
-  document.getElementById('resultOutput').innerHTML = text;
+  // Step 3: Display the decrypted original text
+  const outputDiv = document.getElementById('resultOutput');
+  outputDiv.innerHTML = decryptedText;
 }
+
 
 // Audio Playback
 let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
