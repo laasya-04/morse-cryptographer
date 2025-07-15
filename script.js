@@ -95,28 +95,20 @@ function convertToMorse() {
 
   // Note: encrypted and decrypted values are used silently, not shown
 }
-
-// Convert Morse to Text (with Monoalphabetic Decryption)
-function convertToText() {
-  const mode = document.getElementById('modeSelect').value;
-  if (mode !== 'morseToText') return;
-
-  const morse = document.getElementById('textInput').value.trim();
-  if (!morse) return;
-
-  // Convert Morse to encrypted letters
-  const words = morse.split('   ');
-  const encryptedText = words.map(word =>
+function convertToText(){
+  const mode - document.getElementById('modeSelect').value;
+  if(mode!== 'morseToText') return;
+  const morse=document.getElementById('textInput').value.trim();
+  if(!morse) return;
+  const words= morse.split('   ');
+  const encryptedText=words.map(word =>
     word.split(' ').map(code => reverseMorseCodeMap[code] || '').join('')
-  ).join(' ');
-
-  // Decrypt the encrypted letters to original text
-  const originalText = encryptedText.replace(/[A-Z]/g, char => monoAlphaReverseKey[char] || char);
-
-  // Display only the original (decrypted) text
-  const outputDiv = document.getElementById('resultOutput');
+    ).join(' ');
+  const originalText=encryptedText.replace(/[A-Z]/g, char => monoAlphaReverseKey[char] || char);
+  const outputDiv=document.getElementById('resultOutput');
   outputDiv.innerHTML = originalText;
 }
+
 
 // Audio Playback
 let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
