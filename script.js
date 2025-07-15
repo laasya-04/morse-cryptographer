@@ -53,16 +53,16 @@ function convertToMorse() {
   const input = document.getElementById('textInput').value.toUpperCase();
   if (!input) return;
 
-  // Step 1: Encrypt input
+  // Step 1: Convert ORIGINAL input to Morse
+  const morse = input.split('').map(char => morseCodeMap[char] || '').join(' ');
+
+  // Step 2: Encrypt input (if needed for background logic or testing)
   const encrypted = input.replace(/[A-Z]/g, char => monoAlphaKey[char] || char);
 
-  // Step 2: Convert encrypted text to Morse
-  const morse = encrypted.split('').map(char => morseCodeMap[char] || '').join(' ');
-
-  // Step 3: Decrypt back to original text (for display)
+  // Step 3: Decrypt back for comparison (optional)
   const decrypted = encrypted.replace(/[A-Z]/g, char => monoAlphaReverseKey[char] || char);
 
-  // Step 4: Display Morse visually (for decrypted/original letters)
+  // Step 4: Display Morse for original input only
   const outputDiv = document.getElementById('resultOutput');
   outputDiv.innerHTML = '';
 
@@ -75,14 +75,12 @@ function convertToMorse() {
     outputDiv.appendChild(span);
   });
 
-  // Optional: Also display original English text underneath
+  // Optional: Show the original input and comparison
   const textDisplay = document.createElement('div');
-  textDisplay.textContent = `Decrypted English: ${decrypted}`;
-  textDisplay.style.marginTop = '12px';
-  textDisplay.style.fontWeight = 'bold';
-  outputDiv.appendChild(document.createElement('br'));
+  textDisplay.innerHTML = `<br><strong>Original English:</strong> ${input}`;
   outputDiv.appendChild(textDisplay);
 }
+
 
 // Convert Morse to Text (with Monoalphabetic Decryption)
 function convertToText() {
