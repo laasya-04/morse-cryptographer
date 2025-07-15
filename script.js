@@ -37,33 +37,10 @@ const reverseMorseCodeMap = Object.fromEntries(
 );
 
 // Toggle buttons for mode
-//function toggleButtons() {
-  //const mode = document.getElementById('modeSelect').value;
-  //document.getElementById('toMorseBtn').disabled = (mode !== 'textToMorse');
-  //document.getElementById('toTextBtn').disabled = (mode !== 'morseToText');
-//}
 function toggleButtons() {
   const mode = document.getElementById('modeSelect').value;
-  const input = document.getElementById('textInput').value.trim();
-
-  const morseBtn = document.getElementById('toMorseBtn');
-  const textBtn = document.getElementById('toTextBtn');
-  const playBtn = document.getElementById('playBtn');
-  const pauseBtn = document.getElementById('pauseBtn');
-
-  // Reset both buttons
-  morseBtn.disabled = true;
-  textBtn.disabled = true;
-
-  if (mode === 'textToMorse') {
-    morseBtn.disabled = input.length === 0;
-    playBtn.disabled = input.length === 0;
-    pauseBtn.disabled = input.length === 0;
-  } else if (mode === 'morseToText') {
-    textBtn.disabled = input.length === 0;
-    playBtn.disabled = true;
-    pauseBtn.disabled = true;
-  }
+  document.getElementById('toMorseBtn').disabled = (mode !== 'textToMorse');
+  document.getElementById('toTextBtn').disabled = (mode !== 'morseToText');
 }
 
 window.onload = () => toggleButtons();
