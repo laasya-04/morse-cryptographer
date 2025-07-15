@@ -93,6 +93,13 @@ button {
   cursor: pointer;
   font-weight: bold;
 }
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #999; /* or any muted color */
+  color: white;
+}
+
 
 footer {
   text-align: center;
