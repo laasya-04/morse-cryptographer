@@ -1,17 +1,4 @@
-// Monoalphabetic Cipher (Fixed Key)
-const monoAlphaKey = {
-  'A': 'Q', 'B': 'W', 'C': 'E', 'D': 'R', 'E': 'T', 'F': 'Y',
-  'G': 'U', 'H': 'I', 'I': 'O', 'J': 'P', 'K': 'A', 'L': 'S',
-  'M': 'D', 'N': 'F', 'O': 'G', 'P': 'H', 'Q': 'J', 'R': 'K',
-  'S': 'L', 'T': 'Z', 'U': 'X', 'V': 'C', 'W': 'V', 'X': 'B',
-  'Y': 'N', 'Z': 'M'
-};
-
-const monoAlphaReverseKey = Object.fromEntries(
-  Object.entries(monoAlphaKey).map(([k, v]) => [v, k])
-);
-
-// Service Worker Registration
+// Register Service Worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('service-worker.js')
@@ -20,7 +7,50 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// Morse Code Mappings
+// Toggle buttons based on mode
+function toggleButtons() {
+  const mode = document.getElementById('modeSelect').value;
+  const toMorseBtn = document.getElementById('toMorseBtn');
+  const toTextBtn = document.getElementById('toTextBtn');
+  const playBtn = document.getElementById('playBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  toMorseBtn.disabled = (mode !== 'textToMorse');
+  toTextBtn.disabled = (mode !== 'morseToText');
+  playBtn.disabled = (mode !== 'textToMorse');
+  pauseBtn.disabled = (mode !== 'textToMorse');
+  [toMorseBtn, toTextBtn, playBtn, pauseBtn].forEach(btn => {
+    btn.style.backgroundColor = btn.disabled ? 'lightgreen' : '';
+  });
+  if (mode === 'textToMorse') {
+    toTextBtn.style.backgroundColor = 'lightgreen';
+  } else if (mode === 'morseToText') {
+    toMorseBtn.style.backgroundColor = 'lightgreen';
+  }
+}
+window.onload = () => toggleButtons();
+
+// Keypress input for Morse
+let pressStartTime = 0;
+let isSpaceHeld = false;
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'ArrowUp' && !isSpaceHeld) {
+    pressStartTime = Date.now();
+    isSpaceHeld = true;
+    e.preventDefault();
+  }
+});
+document.addEventListener('keyup', (e) => {
+  if (e.code === 'ArrowUp' && isSpaceHeld) {
+    const duration = Date.now() - pressStartTime;
+    isSpaceHeld = false;
+    const threshold = 500;
+    const symbol = duration < threshold ? '.' : '-';
+    const input = document.getElementById('textInput');
+    input.value += symbol;
+  }
+});
+
+// Morse & Cipher Maps
 const morseCodeMap = {
   'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
   'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
@@ -31,59 +61,39 @@ const morseCodeMap = {
   '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.',
   ' ': '/'
 };
-
 const reverseMorseCodeMap = Object.fromEntries(
   Object.entries(morseCodeMap).map(([k, v]) => [v, k])
 );
 
-// Toggle buttons for mode
-function toggleButtons() {
-  const mode = document.getElementById('modeSelect').value;
-
-  const toMorseBtn = document.getElementById('toMorseBtn');
-  const toTextBtn = document.getElementById('toTextBtn');
-  const playBtn = document.getElementById('playBtn');
-  const pauseBtn = document.getElementById('pauseBtn');
-
-  const isTextToMorse = (mode === 'textToMorse');
-
-  toMorseBtn.disabled = !isTextToMorse;
-  toTextBtn.disabled = isTextToMorse;
-
-  // 🔒 Disable Play & Pause in "Morse to Text" mode
-  playBtn.disabled = !isTextToMorse;
-  pauseBtn.disabled = !isTextToMorse;
-
-  // Optional: Add styles and cursor for disabled buttons
-  [playBtn, pauseBtn].forEach(btn => {
-    btn.style.cursor = btn.disabled ? "not-allowed" : "pointer";
-    btn.style.backgroundColor = btn.disabled ? "#ccc" : ""; // Optional color effect
-  });
+// Monoalphabetic Cipher Maps
+const monoAlphaKey = {
+  'A': 'Q', 'B': 'W', 'C': 'E', 'D': 'R', 'E': 'T', 'F': 'Y',
+  'G': 'U', 'H': 'I', 'I': 'O', 'J': 'P', 'K': 'A', 'L': 'S',
+  'M': 'D', 'N': 'F', 'O': 'G', 'P': 'H', 'Q': 'J', 'R': 'K',
+  'S': 'L', 'T': 'Z', 'U': 'X', 'V': 'C', 'W': 'V', 'X': 'B',
+  'Y': 'N', 'Z': 'M', '0': '0', '1': '1', '2': '2', '3': '3',
+  '4': '4', '5': '5', '6': '6', '7': '7', '8': '8', '9': '9',
+  ' ': ' '
+};
+const reverseMonoAlphaKey = Object.fromEntries(
+  Object.entries(monoAlphaKey).map(([k, v]) => [v, k])
+);
+function encryptText(text) {
+  return text.split('').map(char => monoAlphaKey[char] || char).join('');
+}
+function decryptText(text) {
+  return text.split('').map(char => reverseMonoAlphaKey[char] || char).join('');
 }
 
-window.onload = () => toggleButtons();
-
-// Convert to Morse (with Monoalphabetic Encryption)
+// Convert Text → Cipher → Morse → Display
 function convertToMorse() {
   const mode = document.getElementById('modeSelect').value;
   if (mode !== 'textToMorse') return;
-
   const input = document.getElementById('textInput').value.toUpperCase();
-  if (!input) return;
-
-  // Step 1: Encrypt original input (for logic)
-  const encrypted = input.replace(/[A-Z]/g, char => monoAlphaKey[char] || char);
-
-  // Step 2: Decrypt it back (internal test/logic only)
-  const decrypted = encrypted.replace(/[A-Z]/g, char => monoAlphaReverseKey[char] || char);
-
-  // Step 3: Convert original input to Morse (NOT the encrypted one)
-  const morse = input.split('').map(char => morseCodeMap[char] || '').join(' ');
-
-  // Step 4: Display only Morse in output box
+  const encrypted = encryptText(input);
+  const morse = encrypted.split('').map(char => morseCodeMap[char] || '').join(' ');
   const outputDiv = document.getElementById('resultOutput');
   outputDiv.innerHTML = '';
-
   morse.split('').forEach(symbol => {
     const span = document.createElement('span');
     span.textContent = symbol;
@@ -92,61 +102,52 @@ function convertToMorse() {
     }
     outputDiv.appendChild(span);
   });
-
-  // Note: encrypted and decrypted values are used silently, not shown
 }
 
+// Convert Morse → Ciphered Text → Decrypted Text
 function convertToText() {
   const mode = document.getElementById('modeSelect').value;
   if (mode !== 'morseToText') return;
-
   const morse = document.getElementById('textInput').value.trim();
-  if (!morse) return;
-
-  // Step 1: Convert Morse to encrypted letters
   const words = morse.split('   ');
-  const encryptedText = words.map(word =>
-    word.split(' ').map(code => reverseMorseCodeMap[code] || '').join('')
-  ).join(' ');
-
-  // Step 2: Decrypt encrypted letters to get the original text
-  const originalText = encryptedText.replace(/[A-Z]/g, char => monoAlphaReverseKey[char] || char);
-
-  // Step 3: Display only the original text
-  const outputDiv = document.getElementById('resultOutput');
-  outputDiv.innerHTML = originalText;
+  const encryptedText = words
+    .map(word => word.split(' ').map(code => reverseMorseCodeMap[code] || '').join(''))
+    .join(' ');
+  const decryptedText = decryptText(encryptedText);
+  document.getElementById('resultOutput').innerHTML = decryptedText;
 }
 
-
-
-
-// Audio Playback
+// Morse Audio Playback
 let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 let oscillator;
 let isPaused = false;
 let playbackIndex = 0;
 let playbackTimer;
 
+document.body.addEventListener('click', () => {
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+}, { once: true });
+
 function playMorse() {
   stopMorse();
   isPaused = false;
+  document.getElementById('playBtn').disabled = true;
+  document.getElementById('playBtn').disabled = false;
   const chars = Array.from(document.querySelectorAll('.morse-char'));
   playSymbols(chars);
 }
-
 function playSymbols(chars) {
   if (playbackIndex >= chars.length || isPaused) return;
-
   const currentChar = chars[playbackIndex];
   const symbol = currentChar.textContent;
-
   if (symbol === '.' || symbol === '-') {
     oscillator = audioCtx.createOscillator();
     oscillator.frequency.value = 600;
     oscillator.type = 'sine';
     oscillator.connect(audioCtx.destination);
     oscillator.start();
-
     currentChar.classList.add('highlight');
     const duration = (symbol === '.' ? 150 : 400);
     setTimeout(() => {
@@ -160,34 +161,32 @@ function playSymbols(chars) {
     playbackTimer = setTimeout(() => playSymbols(chars), 150);
   }
 }
-
 function pauseMorse() {
   isPaused = !isPaused;
-  if (!isPaused) playMorse();
-  else clearTimeout(playbackTimer);
+  const playBtn = document.getElementById('playBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  if (!isPaused) {
+    playBtn.disabled = true;
+    pauseBtn.disabled = false;
+    playMorse();
+  } else {
+    playBtn.disabled = false;
+    pauseBtn.disabled = true;
+    clearTimeout(playbackTimer);
+  }
 }
-
 function stopMorse() {
   clearTimeout(playbackTimer);
-  if (oscillator) oscillator.stop();
-  isPaused = false;
+  isPaused = true;
   playbackIndex = 0;
-  document.querySelectorAll('.morse-char').forEach(el =>
-    el.classList.remove('highlight')
-  );
+  if (oscillator) oscillator.stop();
 }
 
-function repeatMorse() {
-  stopMorse();
-  playMorse();
-}
-
-// Canvas Background Animation
+// Canvas background animation
 const canvas = document.getElementById('morseBackground');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-
 const particles = [];
 const symbols = ['.', '-'];
 for (let i = 0; i < 200; i++) {
@@ -200,7 +199,6 @@ for (let i = 0; i < 200; i++) {
     opacity: 0.3 + Math.random() * 0.7
   });
 }
-
 function animateParticles() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   particles.forEach(p => {
@@ -220,25 +218,4 @@ animateParticles();
 window.addEventListener('resize', () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-});
-// Morse input via ArrowUp key based on duration
-let keyPressStart = null;
-
-document.addEventListener('keydown', (e) => {
-  if (e.code === 'ArrowUp' && keyPressStart === null) {
-    keyPressStart = Date.now();
-  }
-});
-
-document.addEventListener('keyup', (e) => {
-  if (e.code === 'ArrowUp' && keyPressStart !== null) {
-    const duration = Date.now() - keyPressStart;
-    const inputField = document.getElementById('textInput');
-    const symbol = (duration <= 500) ? '.' : '-';
-    inputField.value += symbol;
-    keyPressStart = null;
-
-    // Update button state
-    toggleButtons();
-  }
 });
