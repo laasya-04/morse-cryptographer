@@ -39,8 +39,13 @@ const reverseMorseCodeMap = Object.fromEntries(
 // Toggle buttons for mode
 function toggleButtons() {
   const mode = document.getElementById('modeSelect').value;
-  document.getElementById('toMorseBtn').disabled = (mode !== 'textToMorse');
-  document.getElementById('toTextBtn').disabled = (mode !== 'morseToText');
+  const input = document.getElementById('textInput').value.trim();
+  const morseBtn = document.getElementById('toMorseBtn');
+  const textBtn = document.getElementById('toTextBtn');
+
+  // Enable only if input is not empty and the mode matches
+  morseBtn.disabled = !(mode === 'textToMorse' && input.length > 0);
+  textBtn.disabled = !(mode === 'morseToText' && input.length > 0);
 }
 window.onload = () => toggleButtons();
 
