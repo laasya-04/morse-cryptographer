@@ -101,23 +101,23 @@ function convertToText() {
   if (mode !== 'morseToText') return;
 
   const morse = document.getElementById('textInput').value.trim();
+  console.log("RAW MORSE INPUT:", morse);
   if (!morse) return;
 
   const words = morse.split('   ');
-
-  // Convert Morse to encrypted letters
   const encryptedText = words.map(word =>
     word.split(' ').map(code => reverseMorseCodeMap[code] || '').join('')
   ).join(' ');
+  console.log("AFTER MORSE DECODING (encrypted):", encryptedText);
 
-  // Proper decryption using monoAlphaReverseKey
   const originalText = encryptedText.split('').map(char =>
     monoAlphaReverseKey[char] || char
   ).join('');
+  console.log("DECRYPTED ORIGINAL TEXT:", originalText);
 
-  const outputDiv = document.getElementById('resultOutput');
-  outputDiv.innerHTML = originalText;
+  document.getElementById('resultOutput').innerHTML = originalText;
 }
+
 
 
 
