@@ -1,17 +1,17 @@
+// Monoalphabetic Cipher (Fixed Key)
+const monoAlphaKey = {
+  'A': 'Q', 'B': 'W', 'C': 'E', 'D': 'R', 'E': 'T', 'F': 'Y',
+  'G': 'U', 'H': 'I', 'I': 'O', 'J': 'P', 'K': 'A', 'L': 'S',
+  'M': 'D', 'N': 'F', 'O': 'G', 'P': 'H', 'Q': 'J', 'R': 'K',
+  'S': 'L', 'T': 'Z', 'U': 'X', 'V': 'C', 'W': 'V', 'X': 'B',
+  'Y': 'N', 'Z': 'M'
+};
 
-function caesarEncrypt(text, shift = 3) {
-  return text.toUpperCase().replace(/[A-Z]/g, c =>
-    String.fromCharCode((c.charCodeAt(0) - 65 + shift) % 26 + 65)
-  );
-}
+const monoAlphaReverseKey = Object.fromEntries(
+  Object.entries(monoAlphaKey).map(([k, v]) => [v, k])
+);
 
-function caesarDecrypt(text, shift = 3) {
-  return text.toUpperCase().replace(/[A-Z]/g, c =>
-    String.fromCharCode((c.charCodeAt(0) - 65 - shift + 26) % 26 + 65)
-  );
-}
-
-
+// Service Worker Registration
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('service-worker.js')
@@ -20,7 +20,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-
+// Morse Code Mappings
 const morseCodeMap = {
   'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
   'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
@@ -36,6 +36,7 @@ const reverseMorseCodeMap = Object.fromEntries(
   Object.entries(morseCodeMap).map(([k, v]) => [v, k])
 );
 
+// Toggle buttons for mode
 function toggleButtons() {
   const mode = document.getElementById('modeSelect').value;
   document.getElementById('toMorseBtn').disabled = (mode !== 'textToMorse');
@@ -43,13 +44,15 @@ function toggleButtons() {
 }
 window.onload = () => toggleButtons();
 
-
+// Convert to Morse (with Monoalphabetic Encryption)
 function convertToMorse() {
   const mode = document.getElementById('modeSelect').value;
   if (mode !== 'textToMorse') return;
 
   let text = document.getElementById('textInput').value.toUpperCase();
-  text = caesarEncrypt(text, 3); // always encrypt
+
+  // Monoalphabetic encryption
+  text = text.replace(/[A-Z]/g, char => monoAlphaKey[char] || char);
 
   const morse = text.split('').map(char => morseCodeMap[char] || '').join(' ');
   const outputDiv = document.getElementById('resultOutput');
@@ -65,7 +68,7 @@ function convertToMorse() {
   });
 }
 
-
+// Convert Morse to Text (with Monoalphabetic Decryption)
 function convertToText() {
   const mode = document.getElementById('modeSelect').value;
   if (mode !== 'morseToText') return;
@@ -76,11 +79,13 @@ function convertToText() {
     word.split(' ').map(code => reverseMorseCodeMap[code] || '').join('')
   ).join(' ');
 
-  text = caesarDecrypt(text, 3); // always decrypt
+  // Monoalphabetic decryption
+  text = text.replace(/[A-Z]/g, char => monoAlphaReverseKey[char] || char);
+
   document.getElementById('resultOutput').innerHTML = text;
 }
 
-//audio
+// Audio Playback
 let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 let oscillator;
 let isPaused = false;
@@ -141,7 +146,8 @@ function repeatMorse() {
   stopMorse();
   playMorse();
 }
-//bg
+
+// Canvas Background Animation
 const canvas = document.getElementById('morseBackground');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
