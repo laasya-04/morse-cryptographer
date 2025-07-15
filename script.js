@@ -69,14 +69,20 @@ function convertToText() {
   if (mode !== 'morseToText') return;
 
   const morse = document.getElementById('textInput').value.trim();
+
+  // Step 1: Morse → Characters (should give encrypted characters)
   const words = morse.split('   ');
-  const encrypted = words.map(word =>
+  const encryptedText = words.map(word =>
     word.split(' ').map(code => reverseMorseCodeMap[code] || '').join('')
   ).join(' ');
-  const decrypted = decryptText(encrypted);
 
-  document.getElementById('resultOutput').innerHTML = decrypted;
+  // Step 2: Decrypt it
+  const decryptedText = encryptedText.split('').map(char => reverseMonoAlphaKey[char] || char).join('');
+
+  // Step 3: Show decrypted original message
+  document.getElementById('resultOutput').innerHTML = decryptedText;
 }
+
 
 // --- Button Toggle Logic ---
 function toggleButtons() {
