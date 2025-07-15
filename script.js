@@ -96,7 +96,7 @@ function convertToMorse() {
   // Note: encrypted and decrypted values are used silently, not shown
 }
 function convertToText(){
-  const mode - document.getElementById('modeSelect').value;
+  const mode = document.getElementById('modeSelect').value;
   if(mode!== 'morseToText') return;
   const morse=document.getElementById('textInput').value.trim();
   if(!morse) return;
