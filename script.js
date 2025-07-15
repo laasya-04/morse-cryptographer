@@ -104,20 +104,19 @@ function convertToText() {
   const morse = document.getElementById('textInput').value.trim();
   if (!morse) return;
 
-  // Step 1: Convert Morse to text (this will be encrypted if originally encrypted)
+  // Convert Morse to encrypted letters
   const words = morse.split('   ');
-  let encryptedText = words.map(word =>
+  const encryptedText = words.map(word =>
     word.split(' ').map(code => reverseMorseCodeMap[code] || '').join('')
   ).join(' ');
 
-  // Step 2: Decrypt the encrypted text back to original
-  const decryptedText = encryptedText.replace(/[A-Z]/g, char => monoAlphaReverseKey[char] || char);
+  // Decrypt the encrypted letters to original text
+  const originalText = encryptedText.replace(/[A-Z]/g, char => monoAlphaReverseKey[char] || char);
 
-  // Step 3: Display the decrypted original text
+  // Display only the original (decrypted) text
   const outputDiv = document.getElementById('resultOutput');
-  outputDiv.innerHTML = decryptedText;
+  outputDiv.innerHTML = originalText;
 }
-
 
 // Audio Playback
 let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
